@@ -3,6 +3,7 @@ CREATE TABLE station_days (
     station TEXT NOT NULL,
     day INTEGER NOT NULL,
     embedding vector(1024),
+    raw JSONB,
     UNIQUE (station, day)
 );
 
