@@ -1,33 +1,30 @@
-CREATE TABLE station_days (
+CREATE TABLE device_days (
     id SERIAL PRIMARY KEY,
-    station TEXT NOT NULL,
-    day INTEGER NOT NULL,
+    deviceId BIGINT NOT NULL,
+    day BIGINT NOT NULL,
     embedding vector(1024),
     raw JSONB,
-    UNIQUE (station, day)
+    UNIQUE (deviceId, day)
 );
 
-CREATE TYPE reading_type AS ENUM (
+CREATE TYPE reading_type as ENUM (
     'pressure',
-    'flowRate',
-    'flowAcc',
-    'rawFlowRate',
-    'rawFlowAcc',
-    'prodTurbidity',
-    'rawTurbidity'
-)
+    'flow_rate',
+    'flow_acc',
+    'turbidity'
+);
 
 CREATE TABLE readings (
     id SERIAL PRIMARY KEY,
-    station_day_id INTEGER NOT NULL REFERENCES station_days(id) ON DELETE CASCADE,
-    type reading_type NOT NULL,
-    timestamp BIGINT NOT NULL,
-    value DOUBLE PRECISION NOT NULL
-)
+    device_day_id INTEGER NOT NULL REFERENCES device_days(id) ON DELETE CASCADE,
+    type reading_type,
+    timestamp BIGINT,
+    value DOUBLE PRECISION
+);
 
 CREATE TABLE station_errors (
     id SERIAL PRIMARY KEY,
-    station_day_id INTEGER NOT NULL REFERENCES station_days(id) ON DELETE CASCADE,
-    timestamp BIGINT NOT NULL,
-    error_code TEXT NOT NULL
-)
+    device_day_id INTEGER NOT NULL REFERENCES device_days(id) ON DELETE CASCADE,
+    timestamp BIGINT,
+    error_code TEXT
+);
