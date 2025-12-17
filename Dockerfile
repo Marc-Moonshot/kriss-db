@@ -1,4 +1,4 @@
-FROM postgres:latest as runner
+FROM postgres:latest AS runner
 
 RUN apt-get update && \
     apt-get install -y postgresql-18-pgvector && \
