@@ -3,7 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
+  -ports:
+    - "127.0.0.1:5432:5432"
+  volumes:
       - kriss-data:/var/lib/postgresql
     env_file: .env
 
